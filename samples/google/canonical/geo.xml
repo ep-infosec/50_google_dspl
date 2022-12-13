@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+Copyright 2018, Google Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+    * Neither the name of Google Inc. nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<dspl targetNamespace="http://www.google.com/publicdata/dataset/google/geo"
+      xmlns="http://schemas.google.com/dspl/2010"
+      xmlns:entity="http://www.google.com/publicdata/dataset/google/entity">
+
+  <import namespace="http://www.google.com/publicdata/dataset/google/entity"/>
+
+  <info>
+    <name>
+      <value xml:lang="en">Geographical concepts</value>
+    </name>
+    <description>
+      <value xml:lang="en">Canonical concepts for geographical data.</value>
+    </description>
+    <url>
+      <value xml:lang="en">http://code.google.com/apis/publicdata/docs/canonical/geo.html</value>
+    </url>
+  </info>
+
+  <provider>
+    <name>
+      <value xml:lang="en">Google Inc.</value>
+    </name>
+    <description>
+      <value xml:lang="en">Google Inc.</value>
+    </description>
+    <url>
+      <value xml:lang="en">http://www.google.com</value>
+    </url>
+  </provider>
+
+  <concepts>
+    <concept id="location" extends="entity:entity">
+      <info>
+        <name><value xml:lang="en">Location</value></name>
+        <description>
+          <value xml:lang="en">Base concept for locations.</value>
+        </description>
+      </info>
+      <property id="latitude">
+        <info>
+          <name>
+            <value xml:lang="en">Latitude</value>
+          </name>
+        </info>
+        <type ref="float"/>
+      </property>
+      <property id="longitude">
+        <info>
+          <name>
+            <value xml:lang="en">Longitude</value>
+          </name>
+        </info>
+        <type ref="float"/>
+      </property>
+    </concept>
+
+    <concept id="country" extends="location">
+      <info>
+        <name>
+          <value xml:lang="en">Country or Territory</value>
+        </name>
+        <description>
+          <value xml:lang="en">A country or territory, identified by its ISO-3166-1 2-letter code.</value>
+        </description>
+        <pluralName>
+          <value xml:lang="en">Countries</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">World</value>
+        </totalName>
+      </info>
+      <table ref="countries_table"/>
+    </concept>
+  </concepts>
+
+  <tables>
+    <table id="countries_table">
+      <column id="country" type="string"/>
+      <column id="latitude" type="float"/>
+      <column id="longitude" type="float"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">countries.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>

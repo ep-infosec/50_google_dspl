@@ -1,0 +1,7 @@
+include:
+  - LICENSE.md
+  - CONTRIBUTING.md
+  - index.md
+  - dspl2-spec.md
+
+theme: jekyll-theme-cayman

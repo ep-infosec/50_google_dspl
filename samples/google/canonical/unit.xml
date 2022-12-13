@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+Copyright 2018, Google Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+    * Neither the name of Google Inc. nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<dspl targetNamespace="http://www.google.com/publicdata/dataset/google/unit"
+      xmlns="http://schemas.google.com/dspl/2010"
+      xmlns:entity="http://www.google.com/publicdata/dataset/google/entity">
+
+  <import namespace="http://www.google.com/publicdata/dataset/google/entity"/>
+
+  <info>
+    <name>
+      <value xml:lang="en">Unit concepts</value>
+    </name>
+    <description>
+      <value xml:lang="en">Concepts for to representing units.</value>
+    </description>
+    <url>
+      <value xml:lang="en">http://code.google.com/apis/publicdata/docs/canonical/unit.html</value>
+    </url>
+  </info>
+
+  <provider>
+    <name>
+      <value xml:lang="en">Google Inc.</value>
+    </name>
+    <description>
+      <value xml:lang="en">Google Inc.</value>
+    </description>
+    <url>
+      <value xml:lang="en">http://www.google.com</value>
+    </url>
+  </provider>
+
+  <concepts>
+    <concept id="unit" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Unit</value>
+        </name>
+        <description>
+          <value xml:lang="en">
+            Specifies the unit associated with a metric concept.
+
+            Example:
+
+              <![CDATA[<concept id="area_unit" extends="unit:unit">
+                <info>
+                  <name>
+                    <value>Area in square kilometers</value>
+                  </name>
+                </info>
+                <table ref="area_unit_table"/>
+              </concept>]]>
+
+            The table contains a single row that contains the property values:
+
+              symbol,symbol_position,unit_text
+              km²,END,square kilometers
+
+            One can then use this unit in defining a metric concept:
+
+              <![CDATA[<concept id="country_area" extends="quantity:magnitude">
+                <info>
+                  <name>
+                    <value>Country area in square kilometers</value>
+                  </name>
+                </info>
+                <attribute id="unit" concept="area_unit"/>
+                <table ref="country_area_table"/>
+              </concept>]]>
+
+          </value>
+        </description>
+      </info>
+      <property id="symbol">
+        <info>
+          <name>
+            <value xml:lang="en">The symbol associated with a unit.</value>
+          </name>
+        </info>
+        <type ref="string"/>
+      </property>
+      <property concept="symbol_position"/>
+      <property id="unit_text">
+        <info>
+          <name>
+            <value xml:lang="en">Unit text</value>
+          </name>
+          <description>
+            <value xml:lang="en">
+              Descriptive text that can be displayed next to a value.</value>
+          </description>
+        </info>
+        <type ref="string"/>
+      </property>
+    </concept>
+
+    <concept id="symbol_position">
+      <info>
+        <name>
+          <value xml:lang="en">Unit symbol position</value>
+        </name>
+        <description>
+          <value xml:lang="en">Unit symbol position</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <defaultValue>END</defaultValue>
+      <table ref="unit_symbol_position_table"/>
+    </concept>
+
+    <concept id="currency" extends="unit">
+      <info>
+        <name>
+          <value xml:lang="en">Currency unit</value>
+        </name>
+        <description>
+          <value xml:lang="en">
+            Specifies the currency associated with a metric concept.
+            Each currency is identified by its 3-letter currency code (ISO 4217).
+          </value>
+        </description>
+      </info>
+      <table ref="currency_table"/>
+    </concept>
+  </concepts>
+
+  <tables>
+    <table id="unit_symbol_position_table">
+      <column id="symbol_position" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">unit_symbol_positions.csv</file>
+      </data>
+    </table>
+
+    <table id="currency_table">
+      <column id="currency" type="string"/>
+      <column id="name" type="string"/>
+      <column id="symbol" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">currencies.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>
